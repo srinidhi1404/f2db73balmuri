@@ -18,6 +18,7 @@ var chocolateRouter = require('./routes/chocolate');
 var gridbuildRouter = require('./routes/gridbuild');
 var selectorRouter = require('./routes/selector');
 var chocolate = require("./models/chocolate");
+var resourceRouter = require('./routes/resource');
 
 var app = express();
 
@@ -42,14 +43,14 @@ chocolate({choclateName:"Kit-Kat", chocolateCost:100,
 quantityAvailable:30});
  instance2.save( function(err,doc) {
  if(err) return console.error(err);
- console.log("First object saved")
+ console.log("Second object saved")
  });
  let instance3 = new
 chocolate({choclateName:"Toblerone", chocolateCost:200,
 quantityAvailable:2});
  instance3.save( function(err,doc) {
  if(err) return console.error(err);
- console.log("First object saved")
+ console.log("Third object saved")
  });
 }
 let reseed = true;
@@ -66,6 +67,7 @@ app.use('/users', usersRouter);
 app.use('/chocolate', chocolateRouter);
 app.use('/gridbuild', gridbuildRouter);
 app.use('/selector', selectorRouter);
+app.use('/resource', resourceRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
