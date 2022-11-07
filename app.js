@@ -4,17 +4,56 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 
+require('dotenv').config();
+const connectionString =
+process.env.MONGO_CON
+mongoose = require('mongoose');
+mongoose.connect(connectionString,
+{useNewUrlParser: true,
+useUnifiedTopology: true});
+
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 var chocolateRouter = require('./routes/chocolate');
 var gridbuildRouter = require('./routes/gridbuild');
 var selectorRouter = require('./routes/selector');
+var chocolate = require("./models/chocolate");
 
 var app = express();
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'pug');
+
+// We can seed the collection if needed on
+
+async function recreateDB(){
+ // Delete everything
+ await chocolate.deleteMany();
+ let instance1 = new
+chocolate({choclateName:"Hershey's", chocolateCost:50,
+quantityAvailable:400});
+ instance1.save( function(err,doc) {
+ if(err) return console.error(err);
+ console.log("First object saved")
+ });
+ let instance2 = new
+chocolate({choclateName:"Kit-Kat", chocolateCost:100,
+quantityAvailable:30});
+ instance2.save( function(err,doc) {
+ if(err) return console.error(err);
+ console.log("First object saved")
+ });
+ let instance3 = new
+chocolate({choclateName:"Toblerone", chocolateCost:200,
+quantityAvailable:2});
+ instance3.save( function(err,doc) {
+ if(err) return console.error(err);
+ console.log("First object saved")
+ });
+}
+let reseed = true;
+if (reseed) { recreateDB();}
 
 app.use(logger('dev'));
 app.use(express.json());
