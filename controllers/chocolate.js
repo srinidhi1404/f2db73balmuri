@@ -13,15 +13,24 @@ exports.chocolate_list = async function(req, res) {
     };
 
 
+
 // for a specific chocolate.
 exports.chocolate_detail = function(req, res) {
  res.send('NOT IMPLEMENTED: chocolate detail: ' + req.params.id);
 };
 
 // Handle chocolate delete form on DELETE.
-exports.chocolate_delete = function(req, res) {
- res.send('NOT IMPLEMENTED: chocolate delete DELETE ' + req.params.id);
-};
+exports.chocolate_delete = async function(req, res) {
+    console.log("delete "  + req.params.id) 
+    try { 
+        result = await chocolate.findByIdAndDelete( req.params.id) 
+        console.log("Removed " + result) 
+        res.send(result) 
+    } catch (err) { 
+        res.status(500) 
+        res.send(`{"error": Error deleting ${err}}`); 
+    } 
+}; 
 // Handle chocolate update form on PUT.
 exports.chocolate_update_put = function(req, res) {
  res.send('NOT IMPLEMENTED: chocolate update PUT' + req.params.id);
@@ -59,4 +68,54 @@ exports.chocolate_create_post = async function(req, res) {
     res.status(500);
     res.send(`{"error": ${err}}`);
     }
+    };
+
+    exports.chocolate_create_Page =  function(req, res) { 
+        console.log("create view") 
+        try{ 
+            res.render('chocolateCreate', { title: 'Create Chocolate'}); 
+        } 
+        catch(err){ 
+            res.status(500) 
+            res.send(`{'error': '${err}'}`); 
+        } 
+    };
+
+
+    exports.chocolate_view_one_Page = async function(req, res) { 
+        console.log("single view for id "  + req.query.id) 
+        try{ 
+            result = await chocolate.findById( req.query.id) 
+            res.render('chocolateInspect',  
+    { title: 'Chocolate Detail', toShow: result }); 
+        } 
+        catch(err){ 
+            res.status(500) 
+            res.send(`{'error': '${err}'}`); 
+        } 
+    };
+
+    exports.chocolate_update_Page =  async function(req, res) { 
+        console.log("update view for item "+req.query.id) 
+        try{ 
+            let result = await chocolate.findById(req.query.id) 
+            res.render('chocolateUpdate', { title: 'chocolate Update', toShow: result }); 
+        } 
+        catch(err){ 
+            res.status(500) 
+            res.send(`{'error': '${err}'}`); 
+        } 
+    };
+
+    exports.chocolate_delete_Page = async function(req, res) { 
+        console.log("Delete view for id "  + req.query.id) 
+        try{ 
+            result = await chocolate.findById(req.query.id) 
+            res.render('chocolateDelete', { title: 'chocolate Delete', toShow: 
+    result }); 
+        } 
+        catch(err){ 
+            res.status(500) 
+            res.send(`{'error': '${err}'}`); 
+        } 
     };
