@@ -2,10 +2,10 @@ extends layout
 
 block content
   h1= title
-  - let chocolates = [{choclateName:"Hershey's" , chocolateCost: 50, quantityAvailable: 400},{choclateName:"Kit-Kat", chocolateCost: 100, quantityAvailable: 30},{choclateName:"Toblerone",chocolateCost: 200, quantityAvailable: 2}]
+  - let chocolates = results
   div(class="container-fluid mt-3")
   div(class="row")
-    each chocolate,index in chocolates
+    each chocolate, index in chocolates
         div(class="col-sm-2" onclick=`buy(${index})`)  #{chocolate.choclateName} -  #{chocolate.chocolateCost} - #{chocolate.quantityAvailable} 
     script.
       function buy(itemNo)
