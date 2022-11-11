@@ -14,10 +14,18 @@ exports.chocolate_list = async function(req, res) {
 
 
 
+
 // for a specific chocolate.
-exports.chocolate_detail = function(req, res) {
- res.send('NOT IMPLEMENTED: chocolate detail: ' + req.params.id);
-};
+exports.chocolate_detail = async function(req, res) {
+    console.log("detail" + req.params.id)
+    try {
+    result = await chocolate.findById( req.params.id)
+    res.send(result)
+    } catch (error) {
+    res.status(500)
+    res.send(`{"error": document for id ${req.params.id} not found`);
+    }
+    };
 
 // Handle chocolate delete form on DELETE.
 exports.chocolate_delete = async function(req, res) {
@@ -32,8 +40,24 @@ exports.chocolate_delete = async function(req, res) {
     } 
 }; 
 // Handle chocolate update form on PUT.
-exports.chocolate_update_put = function(req, res) {
- res.send('NOT IMPLEMENTED: chocolate update PUT' + req.params.id);
+exports.chocolate_update_put = async function(req, res) {
+console.log(`update on id ${req.params.id} with body
+${JSON.stringify(req.body)}`)
+try {
+let toUpdate = await chocolate.findById( req.params.id)
+// Do updates of properties
+if(req.body.choclateName)
+toUpdate.choclateName = req.body.choclateName;
+if(req.body.chocolateCost) toUpdate.chocolateCost = req.body.chocolateCost;
+if(req.body.quantityAvailable) toUpdate.quantityAvailable = req.body.quantityAvailable;
+let result = await toUpdate.save();
+console.log("Sucess " + result)
+res.send(result)
+} catch (err) {
+res.status(500)
+res.send(`{"error": ${err}: Update for id ${req.params.id}
+failed`);
+}
 };
 
 // VIEWS
@@ -56,9 +80,9 @@ exports.chocolate_create_post = async function(req, res) {
     // We are looking for a body, since POST does not have query parameters.
     // Even though bodies can be in many different formats, we will be picky
     // and require that it be a json object
-    // {"costume_type":"goat", "cost":12, "size":"large"}
+    // {"choclateName":"goat", "chocolateCost":12, "quantityAvailable":"large"}
     document.choclateName = req.body.choclateName;
-    document.chocolateCost = req.body.chocolateCost;
+    document.chocolatechocolateCost = req.body.chocolatechocolateCost;
     document.quantityAvailable = req.body.quantityAvailable;
     try{
     let results = await document.save();
