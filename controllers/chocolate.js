@@ -110,7 +110,7 @@ exports.chocolate_create_post = async function(req, res) {
         console.log("single view for id "  + req.query.id) 
         try{ 
             result = await chocolate.findById( req.query.id) 
-            res.render('chocolateInspect',  
+            res.render('chocolatedetail',  
     { title: 'Chocolate Detail', toShow: result }); 
         } 
         catch(err){ 
