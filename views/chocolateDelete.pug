@@ -4,24 +4,24 @@ block content
     if (toShow == null)
         h2 No instance to delete
     else
-        - let costumeid = toShow._id
+        - let choclateid = toShow._id
         - let choclateName = toShow.choclateName
         - let chocolateCost = toShow.chocolateCost
         - let quantityAvailable = toShow.quantityAvailable
-        - let actionid = "/resource/chocolate/" + costumeid
+        - let actionid = "/resource/chocolate/" + choclateid
         script let actionid = "#{actionid}"
         div
             div.row
-                div(class='costumeAttr mr-3') Chocolate ID is:
-                div #{costumeid}
+                div(class='chocolateAttr mr-3') Chocolate ID is:
+                div #{choclateid}
             div.row
-                div(class='costumeAttr mr-3') Chocolate Name is:
+                div(class='chocolateAttr mr-3') Chocolate Name is:
                 div #{choclateName}
             div.row
-                div(class='costumeAttr mr-3') Chocolate Cost is:
+                div(class='chocolateAttr mr-3') Chocolate Cost is:
                 div #{chocolateCost}
             div.row
-                div(class='costumeAttr mr-3') Quantity Available is:
+                div(class='chocolateAttr mr-3') Quantity Available is:
                 div #{quantityAvailable}
         button(class="btn btn-danger m-2" onclick="deleteOnid()") Delete
         button(class="btn btn-secondary m-2" onclick="cancel()") Cancel
