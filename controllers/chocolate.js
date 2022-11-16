@@ -93,11 +93,13 @@ exports.chocolate_create_post = async function(req, res) {
     res.send(`{"error": ${err}}`);
     }
     };
-
+// Handle building the view for creating a costume.
+// No body, no in path parameter, no query.
+// Does not need to be async
     exports.chocolate_create_Page =  function(req, res) { 
         console.log("create view") 
         try{ 
-            res.render('chocolateCreate', { title: 'Create Chocolate'}); 
+            res.render('chocolatecreate', { title: 'Chocolate Create'}); 
         } 
         catch(err){ 
             res.status(500) 
@@ -105,7 +107,7 @@ exports.chocolate_create_post = async function(req, res) {
         } 
     };
 
-
+// Handle a show one view with id specified by query
     exports.chocolate_view_one_Page = async function(req, res) { 
         console.log("single view for id "  + req.query.id) 
         try{ 
@@ -118,24 +120,25 @@ exports.chocolate_create_post = async function(req, res) {
             res.send(`{'error': '${err}'}`); 
         } 
     };
-
+// Handle building the view for updating a costume.
+// query provides the id
     exports.chocolate_update_Page =  async function(req, res) { 
         console.log("update view for item "+req.query.id) 
         try{ 
             let result = await chocolate.findById(req.query.id) 
-            res.render('chocolateUpdate', { title: 'chocolate Update', toShow: result }); 
+            res.render('chocolateupdate', { title: 'Chocolate Update', toShow: result }); 
         } 
         catch(err){ 
             res.status(500) 
             res.send(`{'error': '${err}'}`); 
         } 
     };
-
+// Handle a delete one view with id from query
     exports.chocolate_delete_Page = async function(req, res) { 
         console.log("Delete view for id "  + req.query.id) 
         try{ 
             result = await chocolate.findById(req.query.id) 
-            res.render('chocolateDelete', { title: 'chocolate Delete', toShow: 
+            res.render('chocolatedelete', { title: 'Chocolate Delete', toShow: 
     result }); 
         } 
         catch(err){ 
