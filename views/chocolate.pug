@@ -6,7 +6,7 @@ block content
   div(class="container-fluid mt-3")
     - let create = `dispatch(\"/chocolate/create\")`
     button.btn(class="btn-secondary ml-1", onClick=create) Create New Chocolate 
-    br
+    p
     div(class="row m-1 paddingcustom")
       each chocolate,index in chocolates
         - let destination = `dispatch(\"/chocolate/update?id=${chocolate._id}\")` 
@@ -14,8 +14,11 @@ block content
         - let deleteItem = `dispatch(\"/chocolate/delete/?id=${chocolate._id}")`
         div(class="col-sm-2" onclick=`buy(${index})`)  #{chocolate.choclateName} -  #{chocolate.chocolateCost} - #{chocolate.quantityAvailable}
           div 
+          p 
           button.btn( class="btn-primary buttonCustom", onclick= destination) Update
+          p 
           button.btn( class="btn-success buttonCustom", onclick= detail) Inspect
+          p
           button.btn( class="btn-danger buttonCustom", onclick= deleteItem) Delete 
     script.
       function buy(itemNo)
