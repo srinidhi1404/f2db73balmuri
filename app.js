@@ -38,9 +38,9 @@ var resourceRouter = require('./routes/resource');
 var app = express();
 
 // view engine setup
+app.use(express.static(__dirname + '../views'));
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'pug');
-app.use(express.static(`${__dirname}/public`));
 
 // We can seed the collection if needed on
 
