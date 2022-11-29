@@ -1,8 +1,8 @@
 const mongoose = require("mongoose")
 const chocolateSchema = mongoose.Schema({
-    choclateName: String,
-    chocolateCost: Number,
-    quantityAvailable: Number
+    choclateName: {type:String},
+    chocolateCost: { type: Number, min: 10, max: 1000 }, 
+    quantityAvailable: {type: Number, min: 0}
 })
-module.exports = mongoose.model("Chocolte",
+module.exports = mongoose.model("chocolate",
 chocolateSchema)

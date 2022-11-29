@@ -10,11 +10,11 @@ block content
         div.form-group(class="form-group")
             label.chocolateAttr(for='chocolateCost') Chocolate Cost
             p
-            input#chocolateCost(type='number', name='chocolateCost',class="form-control")
+            input#chocolateCost(type='number', name='chocolateCost',class="form-control", min=10, max=1000)
         div.form-group(class="form-group")
             label.chocolateAttr(for='quantityAvailable') Quantity Available
             p
-            input#quantityAvailable(type='number', name='quantityAvailable',class="form-control")
+            input#quantityAvailable(type='number', name='quantityAvailable',class="form-control", min=10)
         p    
         input(type="submit" , class="btn btn-primary")
 
