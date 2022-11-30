@@ -17,7 +17,7 @@ passport.use(new LocalStrategy(
   }
   return done(null, user);
   });
-}))
+}));
 
 require('dotenv').config();
 const connectionString =
@@ -41,6 +41,19 @@ var app = express();
 
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'pug');
+
+app.use(logger('dev'));
+app.use(express.json());
+app.use(express.urlencoded({ extended: false }));
+app.use(cookieParser());
+app.use(require('express-session')({
+  secret: 'keyboard cat',
+  resave: false,
+  saveUninitialized: false
+ }));
+ app.use(passport.initialize());
+ app.use(passport.session());
+app.use(express.static(path.join(__dirname, 'public')));
 
 // We can seed the collection if needed on
 
@@ -72,18 +85,7 @@ quantityAvailable:2});
 let reseed = true;
 if (reseed) { recreateDB();}
 
-app.use(logger('dev'));
-app.use(express.json());
-app.use(express.urlencoded({ extended: false }));
-app.use(cookieParser());
-app.use(require('express-session')({
-  secret: 'keyboard cat',
-  resave: false,
-  saveUninitialized: false
- }));
- app.use(passport.initialize());
- app.use(passport.session());
-app.use(express.static(path.join(__dirname, '../public')));
+
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
