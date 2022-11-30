@@ -17,7 +17,8 @@ passport.use(new LocalStrategy(
   }
   return done(null, user);
   });
-}));
+  }
+));
 
 require('dotenv').config();
 const connectionString =
@@ -38,7 +39,6 @@ var resourceRouter = require('./routes/resource');
 var app = express();
 
 // view engine setup
-
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'pug');
 
@@ -50,10 +50,25 @@ app.use(require('express-session')({
   secret: 'keyboard cat',
   resave: false,
   saveUninitialized: false
- }));
- app.use(passport.initialize());
- app.use(passport.session());
+}));
+app.use(passport.initialize());
+app.use(passport.session());
+
 app.use(express.static(path.join(__dirname, 'public')));
+
+app.use('/', indexRouter);
+app.use('/users', usersRouter);
+app.use('/chocolate', chocolateRouter);
+app.use('/gridbuild', gridbuildRouter);
+app.use('/selector', selectorRouter);
+app.use('/resource', resourceRouter);
+
+//Get the default connection
+var db = mongoose.connection;
+//Bind connection to error event
+db.on('error', console.error.bind(console, 'MongoDB connection error:'));
+db.once("open", function(){
+console.log("Connection to DB succeeded")});
 
 // We can seed the collection if needed on
 
@@ -87,12 +102,7 @@ if (reseed) { recreateDB();}
 
 
 
-app.use('/', indexRouter);
-app.use('/users', usersRouter);
-app.use('/chocolate', chocolateRouter);
-app.use('/gridbuild', gridbuildRouter);
-app.use('/selector', selectorRouter);
-app.use('/resource', resourceRouter);
+
 // passport config
 // Use the existing connection
 // The Account model
