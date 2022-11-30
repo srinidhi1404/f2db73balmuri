@@ -2,12 +2,13 @@ extends layout
 
 block content
   h1= title
+  
+  - let chocolates = results;
   - let create = `dispatch(\"/chocolate/create\")`
   button.btn( class="btn-info ml-1", onclick= create) Create
-  - let chocolates = results;
   div(class="container-fluid mt-3")
     div(class="row m-1")     
-      each chocolate,index in chocolates     
+      each chocolate in chocolates     
         - let destination = `dispatch(\"/chocolate/update?id=${chocolate._id}\")` 
         - let detail = `dispatch(\"/chocolate/detail/?id=${chocolate._id}")`
         - let deleteItem = `dispatch(\"/chocolate/delete/?id=${chocolate._id}")` 
